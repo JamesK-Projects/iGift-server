@@ -24,3 +24,9 @@ Run the tests `npm test`
 ## Deploying
 
 When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.# iGift-server
+
+## Seeding 
+
+To seed your database with dummy data, create the sql file `./seeds/seed.project-name_table-name.sql`.
+Then, populate the database with the data with 
+`psql -U owner_name -d project_name -f ./seeds/seed.project-name_table-name.sql`
