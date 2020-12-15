@@ -4,6 +4,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
+const usersRouter = require('./users/users-router')
+const profilesRouter = require('./profiles/profiles-router')
 
 const app = express()
 
@@ -18,6 +20,9 @@ app.use(
         origin: NODE_ENV
     })
 );
+
+app.use('/api/users', usersRouter)
+app.use('/api/profiles', profilesRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello, world!')
