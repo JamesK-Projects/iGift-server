@@ -6,3 +6,17 @@ CREATE TABLE igift_profiles (
     user_id INTEGER
         REFERENCES igift_users(id) ON DELETE SET NULL
 );
+
+INSERT INTO igift_profiles (name, user_id)
+    VALUES 
+        ('Nick', 1),
+        ('Liz', 1),
+        ('Mayumi', 1),
+        ('Jack', 2),
+        ('Kyoko', 2),
+        ('Kojak', 2),
+        ('Lucy', 3),
+        ('James', 3),
+        ('Amy', 3);
+
+--ALTER SEQUENCE igift_user_id_sequence RESTART WITH igift_profiles.length + 1;

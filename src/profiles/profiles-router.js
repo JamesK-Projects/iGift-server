@@ -13,7 +13,7 @@ const serializeProfile = profile => ({
 })
 
 profilesRouter
-    .route('/')
+    .route(`/`)
     .get((req, res, next) => {
         ProfilesService.getAllProfiles(
             req.app.get('db')
@@ -34,7 +34,7 @@ profilesRouter
                 })
             }
         }
-
+        console.log(newProfile)
         ProfilesService.insertProfile(
             req.app.get('db'),
             newProfile
@@ -69,6 +69,18 @@ profilesRouter
     .get((req, res, next) => {
         res.json(serializeProfile(res.profile))
     })
+
+    .delete((req, res, next) => {
+        ProfilesService.deleteProfile(
+            req.app.get('db'),
+            req.params.profile_id
+        )
+        .then(() => {
+            res.status(204).end()
+        })
+        .catch(next)
+    })
+
     .patch(jsonParser, (req, res, next) => {
         const { name, user_id } = req.body
         const profileToUpdate = { name, user_id }

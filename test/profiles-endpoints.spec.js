@@ -117,27 +117,47 @@ describe.only('Profiles Endpoints', () => {
     })
 
     describe('POST /api/profiles', () => {
-        it('creates a profile, responding in 201 and the new profile', () => {
-            const newProfile = {
-                name: 'Test new name',
-                user_id: 2
-            }
-            return supertest(app)
-                .post('/api/profiles')
-                .send(newProfile)
-                .expect(201)
-                .expect(res => {
-                    expect(res.body.name).to.eql(newProfile.name)
-                    expect(res.body.user_id).to.eql(newProfile.user_id)
-                    expect(res.body).to.have.property('id')
-                    expect(res.headers.location).to.eql(`/api/profiles/${res.body.id}`)
-                })
-                .then(postRes => {
-                    supertest(app)
-                        .get(`/api/profiles/${postRes.body.id}`)
-                        .expect(postRes.body)
-                })
-        })
+        // context('Given there are profiles in the database', () => {
+        //     const testUsers = makeUsersArray();
+        //     const testProfiles = makeProfilesArray();
+
+        //     beforeEach('insert profiles', () => {
+        //         return db
+        //             .into('igift_users')
+        //             .insert(testUsers)
+        //             .then(() => {
+        //                 return db
+        //                     .into('igift_profiles')
+        //                     .insert(testProfiles)
+        //             })
+        //     })
+
+            it('creates a profile, responding in 201 and the new profile', () => {
+                const newProfile = {
+                    name: 'Test new name',
+                    id: 2
+                }
+                
+                return supertest(app)
+                    
+                    .post('/api/profiles/')
+                    .send(newProfile)
+                    .expect(201)
+                    .expect(res => {
+                        console.log('Hello')
+                        expect(res.body.name).to.eql(newProfile.name)
+                        expect(res.body.user_id).to.eql(newProfile.id)
+                        expect(res.body).to.have.property('id')
+                        expect(res.headers.location).to.eql(`/api/profiles/${res.body.id}`)
+                    })
+                    .then(postRes => {
+                        console.log(postRes.body)
+                        supertest(app)
+                            .get(`/api/profiles/${postRes.body.id}`)
+                            .expect(postRes.body)
+                    })
+            })
+        // })
 
 
         const requiredFields = ['name', 'user_id']
@@ -154,6 +174,37 @@ describe.only('Profiles Endpoints', () => {
                     .send(newProfile)
                     .expect(400, {
                         error: { message: `Missing ${field} in request body` }
+                    })
+            })
+        })
+    })
+
+    describe.only('DELETE /api/profiles/:profile_id', () => {
+        context('Given there are profiles in the database', () => {
+            const testUsers = makeUsersArray();
+            const testProfiles = makeProfilesArray()
+
+            beforeEach('insert profiles', () => {
+                return db
+                    .into('igift_users')
+                    .insert(testUsers)
+                    .then(() => {
+                        return db
+                            .into('igift_profiles')
+                            .insert(testProfiles)
+                    })
+            })
+
+            it('responds with 204 and removes the profile', () => {
+                const idToRemove = 2
+                const expectedProfiles = testProfiles.filter(profile => profile.id !== idToRemove)
+                return supertest(app)
+                    .delete(`/profiles/${idToRemove}`)
+                    .expect(204)
+                    .then(res => {
+                        supertest(app)
+                            .get(`/profiles`)
+                            .expect(expectedProfiles)
                     })
             })
         })
