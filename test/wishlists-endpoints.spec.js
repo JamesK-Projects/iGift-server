@@ -4,6 +4,7 @@ const supertest = require('supertest')
 const app = require('../src/app')
 const { makeWishlistsArray, makeMaliciousWishlist } = require('./wishlists.fixtures')
 const { makeProfilesArray } = require('./profiles.fixtures')
+const { makeUsersArray } = require('./users.fixtures')
 
 describe.only('Wishlists Endpoints', () => {
     let db
@@ -34,16 +35,23 @@ describe.only('Wishlists Endpoints', () => {
         context('Given there are wishlists in the database', () => {
             const testProfiles = makeProfilesArray();
             const testWishlists = makeWishlistsArray();
+            const testUsers = makeUsersArray();
 
             beforeEach('insert wishlists', () => {
                 return db
-                    .into('igift_profiles')
-                    .insert(testProfiles)
+                    .into('igift_users')
+                    .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('igift_wishlists')
-                            .insert(testWishlists)
+                            .into('igift_profiles')
+                            .insert(testProfiles)
+                            .then(() => {
+                                return db
+                                    .into('igift_wishlists')
+                                    .insert(testWishlists)
+                            })
                     })
+                    
             })
 
             it('GET /api/wishlists responds with 200 and all of the wishlists', () => {
@@ -67,16 +75,23 @@ describe.only('Wishlists Endpoints', () => {
         context('Given there are wishlists in the database', () => {
             const testProfiles = makeProfilesArray();
             const testWishlists = makeWishlistsArray();
+            const testUsers = makeUsersArray();
 
             beforeEach('insert wishlists', () => {
                 return db
-                    .into('igift_profiles')
-                    .insert(testProfiles)
+                    .into('igift_users')
+                    .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('igift_wishlists')
-                            .insert(testWishlists)
+                            .into('igift_profiles')
+                            .insert(testProfiles)
+                            .then(() => {
+                                return db
+                                    .into('igift_wishlists')
+                                    .insert(testWishlists)
+                            })
                     })
+                    
             })
 
             it('responds with 200 and the specified wishlist', () => {
@@ -90,17 +105,24 @@ describe.only('Wishlists Endpoints', () => {
 
         context('Given an XSS attack wishlist', () => {
             const testProfiles = makeProfilesArray();
+            const testUsers = makeUsersArray();
             const { maliciousWishlist, expectedWishlist } = makeMaliciousWishlist()
                 
             beforeEach('insert malicious wishlist', () => {
                 return db
-                    .into('igift_profiles')
-                    .insert(testProfiles)
+                    .into('igift_users')
+                    .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('igift_pwishlists')
-                            .insert([maliciousWishlist])
+                            .into('igift_profiles')
+                            .insert(testProfiles)
+                            .then(() => {
+                                return db
+                                    .into('igift_wishlists')
+                                    .insert([maliciousWishlist])
+                            })
                     })
+                    
             })
 
             it('removes XSS attack content', () => {
@@ -190,16 +212,23 @@ describe.only('Wishlists Endpoints', () => {
         context('Given there are wishlists in the database', () => {
             const testProfiles = makeProfilesArray();
             const testWishlists = makeWishlistsArray();
+            const testUsers = makeUsersArray();
 
             beforeEach('insert wishlists', () => {
                 return db
-                    .into('igift_profiles')
-                    .insert(testProfiles)
+                    .into('igift_users')
+                    .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('igift_wishlists')
-                            .insert(testWishlists)
+                            .into('igift_profiles')
+                            .insert(testProfiles)
+                            .then(() => {
+                                return db
+                                    .into('igift_wishlists')
+                                    .insert(testWishlists)
+                            })
                     })
+                    
             })
 
             it('responds with 204 and removes the wishlist', () => {
@@ -230,16 +259,23 @@ describe.only('Wishlists Endpoints', () => {
         context('Given there are wishlists in the database', () => {
             const testProfiles = makeProfilesArray();
             const testWishlists = makeWishlistsArray();
+            const testUsers = makeUsersArray();
 
             beforeEach('insert wishlists', () => {
                 return db
-                    .into('igift_profiles')
-                    .insert(testProfiles)
+                    .into('igift_users')
+                    .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('igift_wishlists')
-                            .insert(testWishlists)
+                            .into('igift_profiles')
+                            .insert(testProfiles)
+                            .then(() => {
+                                return db
+                                    .into('igift_wishlists')
+                                    .insert(testWishlists)
+                            })
                     })
+                    
             })
 
             it('responds with 204 and updates the wishlist', () => {

@@ -5,7 +5,7 @@ const app = require('../src/app')
 const { makeProfilesArray, makeMaliciousProfile } = require('./profiles.fixtures')
 const { makeUsersArray } = require('./users.fixtures')
 
-describe.only('Profiles Endpoints', () => {
+describe('Profiles Endpoints', () => {
     let db
 
     before('make knex instance', () => {
