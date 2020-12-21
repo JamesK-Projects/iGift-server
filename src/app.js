@@ -35,7 +35,7 @@ app.use(function validateBearerToken(req, res, next){
     if(!authToken || authToken.split(' ')[1] !== apiToken){
         console.log(authToken)
         console.log(apiToken)
-        return res.status(401).json({ error: 'Unauthorized request' })
+        return res.status(401).json({ error: 'Unauthorizeddd request' })
     }
     next()
 })
