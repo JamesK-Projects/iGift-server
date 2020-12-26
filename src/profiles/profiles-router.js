@@ -51,7 +51,7 @@ profilesRouter
 
 profilesRouter
     .route('/:profile_id')
-    .all(requireAuth)
+    //.all(requireAuth)
     .all((req, res, next) => {
         ProfilesService.getById(
             req.app.get('db'),

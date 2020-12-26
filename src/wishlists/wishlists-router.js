@@ -26,9 +26,11 @@ wishlistsRouter
         })
         .catch(next)
     })
-    .post(requireAuth, jsonParser, (req, res, next) => {
+    .post(jsonParser, (req, res, next) => {
         const { name, cost, checked, profile_id } = req.body
         const newWishlist = { name, cost, checked, profile_id }
+        console.log('wishlist req.body')
+        console.log(newWishlist)
 
         for (const [key, value] of Object.entries(newWishlist)) {
             if (value == null){
@@ -43,10 +45,11 @@ wishlistsRouter
             newWishlist
         )
         .then(wishlist => {
-            res 
-                .status(201)
-                .location(path.posix.join(req.originalUrl, `/${wishlist.id}`))
-                .json(serializeWishlist(wishlist))
+            WishlistsService.getAllWishlists(req.app.get('db'))
+            .then((wishlists) => {
+                return res.status(200).json(wishlists)
+            })
+            
         })
         .catch(next)
     })
@@ -84,15 +87,22 @@ wishlistsRouter
         .catch(next)
     })
 
-    .patch(jsonParser, (req, res, next) => {
-        const { name, cost, checked, profile_id } = req.body
-        const wishlistToUpdate = { name, cost, checked, profile_id }
+    .patch((req, res, next) => {
+        const { name, cost, checked, profile_id, id } = req.body
+        const wishlistToUpdate = { name, cost, checked, profile_id, id }
 
-        const numberOfValues = Object.values(wishlistToUpdate).filter(Boolean).length
-        if(numberOfValues === 0){
+        // const numberOfValues = Object.values(wishlistToUpdate).filter(Boolean).length
+        // if(numberOfValues === 0){
+        //     return res.status(400).json({
+        //         error: {
+        //             message: `Request body must contain either 'name', 'cost', 'checked', or 'profile_id' `
+        //         }
+        //     })
+        // }
+        if(wishlistToUpdate == null){
             return res.status(400).json({
                 error: {
-                    message: `Request body must contain either 'name', 'cost', 'checked', or 'profile_id' `
+                    message: 'Request is null'
                 }
             })
         }
@@ -102,7 +112,11 @@ wishlistsRouter
             wishlistToUpdate
         )
         .then(numRowsAffected => {
-            res.status(204).end()
+            WishlistsService.getById(req.app.get('db'), wishlistToUpdate.id)
+            .then((updatedWishlist) => {
+                return res.status(200).json(updatedWishlist)
+            })
+            
         })
         .catch(next)
     })
