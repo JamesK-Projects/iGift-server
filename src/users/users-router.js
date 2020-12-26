@@ -22,7 +22,7 @@ usersRouter
             req.app.get('db')
         )
         .then(users => {
-            res.json(users)
+            res.json(users.map(serializeUser))
         })
         .catch(next)
     })
@@ -71,28 +71,40 @@ usersRouter
     })
     .get((req, res, next) => {
         res.json(serializeUser(res.user))
+        // console.log('req.body')
+        // console.log(req.body)
+        // console.log('req.params')
+        // console.log(req.params)
+
     })
     .patch(jsonParser, (req, res, next) => {
-        const { name, username, email, password, budget } = req.body
-        const userToUpdate = { name, username, email, password, budget }
-
-        const numberOfValues = Object.values(userToUpdate).filter(Boolean).length
-        if(numberOfValues === 0){
+        const { name, username, email, password, budget, id } = req.body
+        console.log('req.body')
+        console.log(req.body)
+        console.log('req.params')
+        console.log(req.params)
+        const userToUpdate = { name, username, email, password, budget, id }
+        console.log('hello')
+        console.log(userToUpdate)
+        // const numberOfValues = Object.values(userToUpdate).filter(Boolean).length
+        if(userToUpdate == null){
             return res.status(400).json({
                 error: {
-                    message: `Request body must contain either 'name', 'username', 'email', 'password', or 'budget'`
+                    message: `Budget is null`
                 }
             })
         }
+        
         UsersService.updateUser(
             req.app.get('db'),
-            req.params.user_id,
+            req.body.id,
+            //userToUpdate
             userToUpdate
         )
         .then(numRowsAffected => {
             res.status(204).end()
         })
-        .catch(next)
+        .catch((error) => {console.log(error)})
     })
 
 module.exports = usersRouter
