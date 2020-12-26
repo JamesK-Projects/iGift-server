@@ -12,28 +12,28 @@ function makeWishlistsArray() {
             name: 'Hat',
             cost: 20,
             checked: true,
-            profile_id: 3
+            profile_id: 2
         },
         {
             id: 3,
             name: 'Book',
             cost: 18,
             checked: true,
-            profile_id: 5
+            profile_id: 3
         },
         {
             id: 4,
             name: 'Gameboy',
             cost: 100,
             checked: true,
-            profile_id: 7
+            profile_id: 4
         },
         {
             id: 5,
             name: 'Boots',
             cost: 100,
             checked: true,
-            profile_id: 9
+            profile_id: 5
         }
     ];
 }

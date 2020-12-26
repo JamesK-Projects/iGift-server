@@ -232,11 +232,11 @@ describe.only('Wishlists Endpoints', () => {
                 const idToRemove = 2
                 const expectedWishlists = testWishlists.filter(wishlist => wishlist.id !== idToRemove)
                 return supertest(app)
-                    .delete(`/wishlists/${idToRemove}`)
+                    .delete(`/api/wishlists/${idToRemove}`)
                     .expect(204)
                     .then(res => {
                         supertest(app)
-                            .get(`/wishlists`)
+                            .get(`/api/wishlists`)
                             .expect(expectedWishlists)
                     })
             })
@@ -281,12 +281,13 @@ describe.only('Wishlists Endpoints', () => {
                     name: 'updated name',
                     cost: 200,
                     checked: true,
-                    profile_id: 5
+                    profile_id: 1
                 }
                 const expectedWishlist = {
                     ...testWishlists[idToUpdate - 1],
                     ...updateWishlist
                 }
+                var base = {'Content-Type': 'application/json'};
                 return supertest(app)
                     .patch(`/api/wishlists/${idToUpdate}`)
                     .send(updateWishlist)
