@@ -2,6 +2,7 @@ const express = require('express')
 const WishlistsService = require('./wishlists-service')
 const xss = require('xss')
 const path = require('path')
+const { requireAuth } = require('../middleware/basic-auth')
 
 const wishlistsRouter = express.Router()
 const jsonParser = express.json()
@@ -25,7 +26,7 @@ wishlistsRouter
         })
         .catch(next)
     })
-    .post(jsonParser, (req, res, next) => {
+    .post(requireAuth, jsonParser, (req, res, next) => {
         const { name, cost, checked, profile_id } = req.body
         const newWishlist = { name, cost, checked, profile_id }
 

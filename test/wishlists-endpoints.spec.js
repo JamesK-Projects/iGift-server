@@ -6,7 +6,7 @@ const { makeWishlistsArray, makeMaliciousWishlist } = require('./wishlists.fixtu
 const { makeProfilesArray } = require('./profiles.fixtures')
 const { makeUsersArray } = require('./users.fixtures')
 
-describe.only('Wishlists Endpoints', () => {
+describe('Wishlists Endpoints', () => {
     let db
 
     before('make knex instance', () => {

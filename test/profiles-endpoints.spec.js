@@ -22,6 +22,12 @@ describe('Profiles Endpoints', () => {
 
     afterEach('cleanup', () => db.raw('TRUNCATE igift_users, igift_profiles, igift_wishlists RESTART IDENTITY CASCADE'))
 
+    describe.only('Protected endpoints', () => {
+        beforeEach('insert profiles', () => {
+            helpers.seedProfilesTables()
+        })
+    })
+
     describe('GET /api/profiles', () => {
         context('Given no profiles', () => {
             it('responds with 200 and an empty list', () => {
@@ -54,7 +60,7 @@ describe('Profiles Endpoints', () => {
         })
     })
 
-    describe('GET /api/profiles/:profile_id', () => {
+    describe.only('GET /api/profiles/:profile_id', () => {
         context('Given no profiles', () => {
             it('responds with 404', () => {
                 const profileId = 12345

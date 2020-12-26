@@ -2,6 +2,7 @@ const express = require('express')
 const ProfilesService = require('./profiles-service')
 const xss = require('xss')
 const path = require('path')
+const { requireAuth } = require('../middleware/basic-auth')
 
 const profilesRouter = express.Router()
 const jsonParser = express.json()
@@ -50,6 +51,7 @@ profilesRouter
 
 profilesRouter
     .route('/:profile_id')
+    .all(requireAuth)
     .all((req, res, next) => {
         ProfilesService.getById(
             req.app.get('db'),
