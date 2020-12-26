@@ -4,7 +4,7 @@ const supertest = require('supertest')
 const app = require('../src/app')
 const { makeUsersArray, makeMaliciousUser, cleanTables } = require('./users.fixtures')
 
-describe.only('Users Endpoints', () => {
+describe('Users Endpoints', () => {
     let db
 
     before('make knex instance', () => {
@@ -177,7 +177,7 @@ describe.only('Users Endpoints', () => {
                     .insert(testUsers)
             })
 
-            it('responds with 204 and updates the user', () => {
+            it('responds with 200 and updates the user', () => {
                 const idToUpdate = 2
                 const updateUser = {
                     name: 'updated name',
@@ -193,7 +193,7 @@ describe.only('Users Endpoints', () => {
                 return supertest(app)
                     .patch(`/api/users/${idToUpdate}`)
                     .send(updateUser)
-                    .expect(204)
+                    .expect(200)
                     .then(res => {
                         supertest(app)
                             .get(`/api/users/${idToUpdate}`)
@@ -213,7 +213,7 @@ describe.only('Users Endpoints', () => {
                     })
             })
 
-            it('responds with 204 when only updating a subset of fields', () => {
+            it('responds with 200 when only updating a subset of fields', () => {
                 const idToUpdate = 2
                 const updateUser = {
                     name: 'updated user name'
@@ -229,7 +229,7 @@ describe.only('Users Endpoints', () => {
                         ...updateUser,
                         fieldToIgnore: 'should not be in GET response'
                     })
-                    .expect(204)
+                    .expect(200)
                     .then(res => {
                         supertest(app)
                         .get(`/api/users/${idToUpdate}`)

@@ -44,7 +44,7 @@ profilesRouter
             res 
                 .status(201)
                 .location(path.posix.join(req.originalUrl, `/${profile.id}`))
-                .json(serializeProfile(profile))
+                .json(profile)
         })
         .catch(next)
     })

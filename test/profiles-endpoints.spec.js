@@ -5,7 +5,7 @@ const app = require('../src/app')
 const { makeProfilesArray, makeMaliciousProfile } = require('./profiles.fixtures')
 const { makeUsersArray } = require('./users.fixtures')
 
-describe('Profiles Endpoints', () => {
+describe.only('Profiles Endpoints', () => {
     let db
 
     before('make knex instance', () => {
@@ -145,12 +145,10 @@ describe('Profiles Endpoints', () => {
                 }
                 
                 return supertest(app)
-                    
-                    .post('/api/profiles/')
+                    .post('/api/profiles')
                     .send(newProfile)
                     .expect(201)
                     .expect(res => {
-                        //console.log('Hello')
                         expect(res.body.name).to.eql(newProfile.name)
                         expect(res.body.user_id).to.eql(newProfile.user_id)
                         expect(res.body).to.have.property('id')

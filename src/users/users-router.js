@@ -95,7 +95,7 @@ usersRouter
         
         UsersService.updateUser(
             req.app.get('db'),
-            req.body.id,
+            req.params.user_id,
             //userToUpdate
             userToUpdate
         )
