@@ -2,9 +2,9 @@ const { expect } = require('chai')
 const knex = require('knex')
 const supertest = require('supertest')
 const app = require('../src/app')
-const { makeUsersArray, makeMaliciousUser } = require('./users.fixtures')
+const { makeUsersArray, makeMaliciousUser, cleanTables } = require('./users.fixtures')
 
-describe('Users Endpoints', () => {
+describe.only('Users Endpoints', () => {
     let db
 
     before('make knex instance', () => {
@@ -16,6 +16,10 @@ describe('Users Endpoints', () => {
     })
 
     after('disconnect from db', () => db.destroy())
+
+    // before('clean the table', () => cleanTables(db))
+
+    // afterEach('cleanup', () => cleanTables(db))
 
     before('clean the table', () => db.raw('TRUNCATE igift_users, igift_profiles, igift_wishlists RESTART IDENTITY CASCADE'))
 

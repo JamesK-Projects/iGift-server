@@ -22,11 +22,11 @@ describe('Profiles Endpoints', () => {
 
     afterEach('cleanup', () => db.raw('TRUNCATE igift_users, igift_profiles, igift_wishlists RESTART IDENTITY CASCADE'))
 
-    describe('Protected endpoints', () => {
-        beforeEach('insert profiles', () => {
-            helpers.seedProfilesTables()
-        })
-    })
+    // describe('Protected endpoints', () => {
+    //     beforeEach('insert profiles', () => {
+    //         helpers.seedProfilesTables()
+    //     })
+    // })
 
     describe('GET /api/profiles', () => {
         context('Given no profiles', () => {

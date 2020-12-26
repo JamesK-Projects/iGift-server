@@ -48,7 +48,30 @@ function makeMaliciousUser(){
     }
 }
 
+function cleanTables(db) {
+    return db.transaction(trx =>
+      trx.raw(
+        `TRUNCATE
+          igift_users,
+          igift_profiles,
+          igift_wishlists
+        `
+      )
+      .then(() =>
+        Promise.all([
+          trx.raw(`ALTER SEQUENCE igift_users_id_seq minvalue 0 START WITH 1`),
+          trx.raw(`ALTER SEQUENCE igift_profiles_id_seq minvalue 0 START WITH 1`),
+          trx.raw(`ALTER SEQUENCE igift_wishlists_id_seq minvalue 0 START WITH 1`),
+          trx.raw(`SELECT setval('igift_users_id_seq', 0)`),
+          trx.raw(`SELECT setval('igift_profiles_id_seq', 0)`),
+          trx.raw(`SELECT setval('igift_wishlists_id_seq', 0)`),
+        ])
+      )
+    )
+  }
+
 module.exports = {
     makeUsersArray,
-    makeMaliciousUser
+    makeMaliciousUser,
+    cleanTables
 }

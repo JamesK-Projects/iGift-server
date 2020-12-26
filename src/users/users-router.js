@@ -79,16 +79,16 @@ usersRouter
         // console.log(req.params)
 
     })
-    .patch((req, res, next) => {
-        const { name, username, email, password, budget, id } = req.body
-        const userToUpdate = { name, username, email, password, budget, id }
+    .patch(jsonParser, (req, res, next) => {
+        const { name, username, email, password, budget } = req.body
+        const userToUpdate = { name, username, email, password, budget }
         // console.log('userToUpdate')
         // console.log(userToUpdate)
-        // const numberOfValues = Object.values(userToUpdate).filter(Boolean).length
-        if(userToUpdate == null){
+        const numberOfValues = Object.values(userToUpdate).filter(Boolean).length
+        if(numberOfValues === 0){
             return res.status(400).json({
                 error: {
-                    message: `Budget is null`
+                    message: `Request body must contain either 'name', 'username', 'email', 'password', or 'budget'`
                 }
             })
         }
@@ -104,7 +104,6 @@ usersRouter
                 //console.log(users)
                 return res.status(200).json(users)
             })
-            
         })
         .catch(next)
     })
