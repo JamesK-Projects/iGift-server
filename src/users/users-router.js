@@ -29,7 +29,7 @@ usersRouter
     .post(jsonParser, (req, res, next) => {
         const { name, username, email, password, budget } = req.body
         const newUser = { name, username, email, password, budget }
-        console.log(req.body)
+        //console.log(req.body)
         for (const [key, value] of Object.entries(newUser)) {
             if (value == null){
                 return res.status(400).json({
@@ -54,8 +54,8 @@ usersRouter
 usersRouter
     .route('/:user_id')
     .all((req, res, next) => {
-        console.log('req.body all() middleware:')
-        console.log(req.body)
+        //console.log('req.body all() middleware:')
+        //console.log(req.body)
         UsersService.getById(
             req.app.get('db'),
             req.params.user_id
@@ -81,10 +81,6 @@ usersRouter
     })
     .patch((req, res, next) => {
         const { name, username, email, password, budget, id } = req.body
-        console.log('req.body')
-        console.log(req.body)
-        console.log('req.params')
-        console.log(req.params)
         const userToUpdate = { name, username, email, password, budget, id }
         // console.log('userToUpdate')
         // console.log(userToUpdate)
@@ -105,7 +101,7 @@ usersRouter
         )
         .then(numRowsAffected => {
             UsersService.getAllUsers(req.app.get('db')).then((users) => {
-                console.log(users)
+                //console.log(users)
                 return res.status(200).json(users)
             })
             

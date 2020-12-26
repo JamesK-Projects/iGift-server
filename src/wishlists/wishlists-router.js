@@ -29,8 +29,6 @@ wishlistsRouter
     .post(jsonParser, (req, res, next) => {
         const { name, cost, checked, profile_id } = req.body
         const newWishlist = { name, cost, checked, profile_id }
-        console.log('wishlist req.body')
-        console.log(newWishlist)
 
         for (const [key, value] of Object.entries(newWishlist)) {
             if (value == null){
@@ -39,7 +37,7 @@ wishlistsRouter
                 })
             }
         }
-        console.log(newWishlist)
+        //console.log(newWishlist)
         WishlistsService.insertWishlist(
             req.app.get('db'),
             newWishlist

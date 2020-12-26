@@ -169,7 +169,7 @@ describe('Wishlists Endpoints', () => {
                     .send(newWishlist)
                     .expect(201)
                     .expect(res => {
-                        console.log('Hello')
+                        //console.log('Hello')
                         expect(res.body.name).to.eql(newWishlist.name)
                         expect(res.body.cost).to.eql(newWishlist.cost)
                         expect(res.body.checked).to.eql(newWishlist.checked)
@@ -178,7 +178,7 @@ describe('Wishlists Endpoints', () => {
                         expect(res.headers.location).to.eql(`/api/wishlists/${res.body.id}`)
                     })
                     .then(postRes => {
-                        console.log(postRes.body)
+                        //console.log(postRes.body)
                         supertest(app)
                             .get(`/api/wishlists/${postRes.body.id}`)
                             .expect(postRes.body)

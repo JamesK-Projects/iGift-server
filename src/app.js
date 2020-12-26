@@ -26,8 +26,6 @@ app.use(
 );
 
 app.use(jsonParser, (req, res, next) => {
-    console.log('req.body')
-    console.log(req.body)
     next()
 })
 

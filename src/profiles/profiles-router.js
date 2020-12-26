@@ -35,7 +35,7 @@ profilesRouter
                 })
             }
         }
-        console.log(newProfile)
+        //console.log(newProfile)
         ProfilesService.insertProfile(
             req.app.get('db'),
             newProfile

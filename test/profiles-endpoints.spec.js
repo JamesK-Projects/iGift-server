@@ -22,7 +22,7 @@ describe('Profiles Endpoints', () => {
 
     afterEach('cleanup', () => db.raw('TRUNCATE igift_users, igift_profiles, igift_wishlists RESTART IDENTITY CASCADE'))
 
-    describe.only('Protected endpoints', () => {
+    describe('Protected endpoints', () => {
         beforeEach('insert profiles', () => {
             helpers.seedProfilesTables()
         })
@@ -60,7 +60,7 @@ describe('Profiles Endpoints', () => {
         })
     })
 
-    describe.only('GET /api/profiles/:profile_id', () => {
+    describe('GET /api/profiles/:profile_id', () => {
         context('Given no profiles', () => {
             it('responds with 404', () => {
                 const profileId = 12345
@@ -150,14 +150,14 @@ describe('Profiles Endpoints', () => {
                     .send(newProfile)
                     .expect(201)
                     .expect(res => {
-                        console.log('Hello')
+                        //console.log('Hello')
                         expect(res.body.name).to.eql(newProfile.name)
                         expect(res.body.user_id).to.eql(newProfile.user_id)
                         expect(res.body).to.have.property('id')
                         expect(res.headers.location).to.eql(`/api/profiles/${res.body.id}`)
                     })
                     .then(postRes => {
-                        console.log(postRes.body)
+                        //console.log(postRes.body)
                         supertest(app)
                             .get(`/api/profiles/${postRes.body.id}`)
                             .expect(postRes.body)
