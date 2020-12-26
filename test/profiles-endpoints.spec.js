@@ -5,7 +5,7 @@ const app = require('../src/app')
 const { makeProfilesArray, makeMaliciousProfile } = require('./profiles.fixtures')
 const { makeUsersArray } = require('./users.fixtures')
 
-describe.only('Profiles Endpoints', () => {
+describe('Profiles Endpoints', () => {
     let db
 
     before('make knex instance', () => {
@@ -123,25 +123,20 @@ describe.only('Profiles Endpoints', () => {
     })
 
     describe('POST /api/profiles', () => {
-        // context('Given there are profiles in the database', () => {
-        //     const testUsers = makeUsersArray();
-        //     const testProfiles = makeProfilesArray();
+        context('Given there are profiles in the database', () => {
+            const testUsers = makeUsersArray();
+            //const testProfiles = makeProfilesArray();
 
-        //     beforeEach('insert profiles', () => {
-        //         return db
-        //             .into('igift_users')
-        //             .insert(testUsers)
-        //             .then(() => {
-        //                 return db
-        //                     .into('igift_profiles')
-        //                     .insert(testProfiles)
-        //             })
-        //     })
+            beforeEach('insert users', () => {
+                return db
+                    .into('igift_users')
+                    .insert(testUsers)
+            })
 
             it('creates a profile, responding in 201 and the new profile', () => {
                 const newProfile = {
                     name: 'Test new name',
-                    user_id: 2
+                    user_id: 1
                 }
                 
                 return supertest(app)
@@ -161,7 +156,7 @@ describe.only('Profiles Endpoints', () => {
                             .expect(postRes.body)
                     })
             })
-        // })
+        })
 
 
         const requiredFields = ['name', 'user_id']
@@ -197,17 +192,20 @@ describe.only('Profiles Endpoints', () => {
                             .into('igift_profiles')
                             .insert(testProfiles)
                     })
+                    
             })
 
             it('responds with 204 and removes the profile', () => {
                 const idToRemove = 2
                 const expectedProfiles = testProfiles.filter(profile => profile.id !== idToRemove)
+                console.log(testProfiles)
+                console.log(expectedProfiles)
                 return supertest(app)
-                    .delete(`/profiles/${idToRemove}`)
+                    .delete(`/api/profiles/${idToRemove}`)
                     .expect(204)
                     .then(res => {
                         supertest(app)
-                            .get(`/profiles`)
+                            .get(`/api/profiles`)
                             .expect(expectedProfiles)
                     })
             })

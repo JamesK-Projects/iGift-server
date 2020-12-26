@@ -45,7 +45,7 @@ wishlistsRouter
         .then(wishlist => {
             WishlistsService.getAllWishlists(req.app.get('db'))
             .then((wishlists) => {
-                return res.status(200).json(wishlists)
+                return res.status(201).json(wishlists)
             })
             
         })

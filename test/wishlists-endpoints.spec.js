@@ -6,7 +6,7 @@ const { makeWishlistsArray, makeMaliciousWishlist } = require('./wishlists.fixtu
 const { makeProfilesArray } = require('./profiles.fixtures')
 const { makeUsersArray } = require('./users.fixtures')
 
-describe('Wishlists Endpoints', () => {
+describe.only('Wishlists Endpoints', () => {
     let db
 
     before('make knex instance', () => {
@@ -51,13 +51,13 @@ describe('Wishlists Endpoints', () => {
                                     .insert(testWishlists)
                             })
                     })
-                    
             })
 
             it('GET /api/wishlists responds with 200 and all of the wishlists', () => {
                 return supertest(app)
                     .get('/api/wishlists')
                     .expect(200, testWishlists)
+                
             })
         })
     })
@@ -140,22 +140,22 @@ describe('Wishlists Endpoints', () => {
     })
 
     describe('POST /api/wishlists', () => {
-        // context('Given there are profiles in the database', () => {
-        //     const testUsers = makeUsersArray();
-        //     const testProfiles = makeProfilesArray();
+        context('Given there are profiles in the database', () => {
+            const testUsers = makeUsersArray();
+            const testProfiles = makeProfilesArray();
 
-        //     beforeEach('insert profiles', () => {
-        //         return db
-        //             .into('igift_users')
-        //             .insert(testUsers)
-        //             .then(() => {
-        //                 return db
-        //                     .into('igift_profiles')
-        //                     .insert(testProfiles)
-        //             })
-        //     })
+            beforeEach('insert profiles', () => {
+                return db
+                    .into('igift_users')
+                    .insert(testUsers)
+                    .then(() => {
+                        return db
+                            .into('igift_profiles')
+                            .insert(testProfiles)
+                    })
+            })
 
-            it('creates a wishlist, responding in 201 and the new wishlist', () => {
+            it('creates a wishlist, responding in 200 and the new wishlist', () => {
                 const newWishlist = {
                     name: 'Test new item name',
                     cost: 200,
@@ -169,22 +169,19 @@ describe('Wishlists Endpoints', () => {
                     .send(newWishlist)
                     .expect(201)
                     .expect(res => {
-                        //console.log('Hello')
-                        expect(res.body.name).to.eql(newWishlist.name)
-                        expect(res.body.cost).to.eql(newWishlist.cost)
-                        expect(res.body.checked).to.eql(newWishlist.checked)
-                        expect(res.body.profile_id).to.eql(newWishlist.profile_id)
-                        expect(res.body).to.have.property('id')
-                        expect(res.headers.location).to.eql(`/api/wishlists/${res.body.id}`)
+                        expect(res.body[0].name).to.eql(newWishlist.name)
+                        expect(res.body[0].cost).to.eql(newWishlist.cost)
+                        expect(res.body[0].checked).to.eql(newWishlist.checked)
+                        expect(res.body[0].profile_id).to.eql(newWishlist.profile_id)
+                        expect(res.body[0]).to.have.property('id')
                     })
                     .then(postRes => {
-                        //console.log(postRes.body)
                         supertest(app)
                             .get(`/api/wishlists/${postRes.body.id}`)
                             .expect(postRes.body)
                     })
             })
-        // })
+        })
 
 
         const requiredFields = ['name', 'cost', 'checked', 'profile_id']
