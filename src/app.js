@@ -7,6 +7,7 @@ const { NODE_ENV } = require('./config')
 const usersRouter = require('./users/users-router')
 const profilesRouter = require('./profiles/profiles-router')
 const wishlistsRouter = require('./wishlists/wishlists-router')
+const jsonParser = express.json()
 
 const app = express()
 
@@ -17,14 +18,24 @@ const morganOption = (NODE_ENV === 'production')
 app.use(morgan(morganOption))
 app.use(helmet())
 app.use(
-    cors({
-        origin: "http://localhost:3000"
-    })
+    cors(
+    //     {
+    //     origin: "http://localhost:3000"
+    // }
+    )
 );
+
+app.use(jsonParser, (req, res, next) => {
+    console.log('req.body')
+    console.log(req.body)
+    next()
+})
 
 app.use('/api/users', usersRouter)
 app.use('/api/profiles', profilesRouter)
 app.use('/api/wishlists', wishlistsRouter)
+
+
 
 // app.use(function validateBearerToken(req, res, next){
 //     const apiToken = process.env.API_TOKEN
@@ -43,6 +54,10 @@ app.use('/api/wishlists', wishlistsRouter)
 app.get('/', (req, res) => {
     res.send('Hello, world!')
 })
+
+// (req, res, next => {
+//     console.log(req)
+// })
 
 app.use(function errorHandler(error, req, res, next) {
     let response

@@ -54,6 +54,8 @@ usersRouter
 usersRouter
     .route('/:user_id')
     .all((req, res, next) => {
+        console.log('req.body all() middleware:')
+        console.log(req.body)
         UsersService.getById(
             req.app.get('db'),
             req.params.user_id
@@ -79,13 +81,13 @@ usersRouter
     })
     .patch(jsonParser, (req, res, next) => {
         const { name, username, email, password, budget, id } = req.body
-        console.log('req.body')
-        console.log(req.body)
-        console.log('req.params')
-        console.log(req.params)
+        // console.log('req.body')
+        // console.log(req.body)
+        // console.log('req.params')
+        // console.log(req.params)
         const userToUpdate = { name, username, email, password, budget, id }
-        console.log('hello')
-        console.log(userToUpdate)
+        // console.log('userToUpdate')
+        // console.log(userToUpdate)
         // const numberOfValues = Object.values(userToUpdate).filter(Boolean).length
         if(userToUpdate == null){
             return res.status(400).json({
