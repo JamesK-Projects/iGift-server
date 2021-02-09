@@ -1,32 +1,42 @@
-# Express Boilerplate!
+# iGift
 
-This is a boilerplate project used for starting new projects!
+Link to live app: https://igift-app.vercel.app/
 
-## Set up
+## Summary of App
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+iGift is designed to help consumers track their holiday gift-spending. 
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+After creating an account and logging in, the user will first set their budget. They will have the option to go back and adjust this budget whenever they want.
 
-## Scripts
+Then, the user can create a profile for each person on their shopping list. The list of the user's profiles will be shown on the main budget page, and clicking on a profile will take the user to the profile's page. 
 
-Start the application `npm start`
+Screenshot of the main budget page:
 
-Start nodemon for the application `npm run dev`
+![alt text](./src/images/budget-page-screenshot-border.png "Budget Page Screenshot")
 
-Run the tests `npm test`
+Each profile's page includes a 'Wishlist' section where the user can add or remove gift items and their prices, and a 'Gifts Purchased' section that lists each of the gifts that have been purchased along with their costs. When a user purchases an item on their wishlist, they can check the box next to that item and it will be added to the 'Gifts Purchased' section below. The total spent on each person will be shown at the bottom of their profile.
 
-## Deploying
+Screenshot of a profile page:
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.# iGift-server
+![alt text](./src/images/profile-page-screenshot-border.png "Profile Page Screenshot")
 
-## Seeding 
+As more gifts are purchased, the cost of each gift will be deducted from the user's budget. At the bottom of the main budget page the user can see how much they have spent, as well as how much of their budget remains. 
 
-To seed your database with dummy data, create the sql file `./seeds/seed.project-name_table-name.sql`.
-Then, populate the database with the data with 
-`psql -U owner_name -d project_name -f ./seeds/seed.project-name_table-name.sql`
+## Technology Used
+
+### Frontend
+
+- HTML
+- CSS
+- Javascript
+- React
+- Hosted on Vercel
+
+### Backend
+
+- Node.js
+- PostgreSql
+- Hosted on Heroku
+
+
+

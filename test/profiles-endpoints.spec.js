@@ -22,12 +22,6 @@ describe('Profiles Endpoints', () => {
 
     afterEach('cleanup', () => db.raw('TRUNCATE igift_users, igift_profiles, igift_wishlists RESTART IDENTITY CASCADE'))
 
-    // describe('Protected endpoints', () => {
-    //     beforeEach('insert profiles', () => {
-    //         helpers.seedProfilesTables()
-    //     })
-    // })
-
     describe('GET /api/profiles', () => {
         context('Given no profiles', () => {
             it('responds with 200 and an empty list', () => {
@@ -83,7 +77,6 @@ describe('Profiles Endpoints', () => {
                             .into('igift_profiles')
                             .insert(testProfiles)
                     })
-                    
             })
 
             it('responds with 200 and the specified profile', () => {
@@ -125,7 +118,6 @@ describe('Profiles Endpoints', () => {
     describe('POST /api/profiles', () => {
         context('Given there are profiles in the database', () => {
             const testUsers = makeUsersArray();
-            //const testProfiles = makeProfilesArray();
 
             beforeEach('insert users', () => {
                 return db
@@ -150,14 +142,12 @@ describe('Profiles Endpoints', () => {
                         expect(res.headers.location).to.eql(`/api/profiles/${res.body.id}`)
                     })
                     .then(postRes => {
-                        //console.log(postRes.body)
                         supertest(app)
                             .get(`/api/profiles/${postRes.body.id}`)
                             .expect(postRes.body)
                     })
             })
         })
-
 
         const requiredFields = ['name', 'user_id']
         requiredFields.forEach(field => {

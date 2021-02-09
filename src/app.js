@@ -18,11 +18,7 @@ const morganOption = (NODE_ENV === 'production')
 app.use(morgan(morganOption))
 app.use(helmet())
 app.use(
-    cors(
-    //     {
-    //     origin: "http://localhost:3000"
-    // }
-    )
+    cors()
 );
 
 app.use(jsonParser, (req, res, next) => {
@@ -34,7 +30,8 @@ app.use('/api/profiles', profilesRouter)
 app.use('/api/wishlists', wishlistsRouter)
 
 
-
+// will need when adding authentication
+//
 // app.use(function validateBearerToken(req, res, next){
 //     const apiToken = process.env.API_TOKEN
 //     const authToken = req.get('Authorization')
@@ -52,10 +49,6 @@ app.use('/api/wishlists', wishlistsRouter)
 app.get('/', (req, res) => {
     res.send('Hello, world!')
 })
-
-// (req, res, next => {
-//     console.log(req)
-// })
 
 app.use(function errorHandler(error, req, res, next) {
     let response

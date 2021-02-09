@@ -17,10 +17,6 @@ describe('Users Endpoints', () => {
 
     after('disconnect from db', () => db.destroy())
 
-    // before('clean the table', () => cleanTables(db))
-
-    // afterEach('cleanup', () => cleanTables(db))
-
     before('clean the table', () => db.raw('TRUNCATE igift_users, igift_profiles, igift_wishlists RESTART IDENTITY CASCADE'))
 
     afterEach('cleanup', () => db.raw('TRUNCATE igift_users, igift_profiles, igift_wishlists RESTART IDENTITY CASCADE'))

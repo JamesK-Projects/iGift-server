@@ -2,7 +2,7 @@ const express = require('express')
 const ProfilesService = require('./profiles-service')
 const xss = require('xss')
 const path = require('path')
-const { requireAuth } = require('../middleware/basic-auth')
+const { requireAuth } = require('../middleware/basic-auth') //will need after adding authentication
 
 const profilesRouter = express.Router()
 const jsonParser = express.json()
@@ -35,7 +35,6 @@ profilesRouter
                 })
             }
         }
-        //console.log(newProfile)
         ProfilesService.insertProfile(
             req.app.get('db'),
             newProfile
@@ -51,7 +50,7 @@ profilesRouter
 
 profilesRouter
     .route('/:profile_id')
-    //.all(requireAuth)
+    //.all(requireAuth) -- will need after adding authentication
     .all((req, res, next) => {
         ProfilesService.getById(
             req.app.get('db'),

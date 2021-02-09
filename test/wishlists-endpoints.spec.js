@@ -6,7 +6,7 @@ const { makeWishlistsArray, makeMaliciousWishlist } = require('./wishlists.fixtu
 const { makeProfilesArray } = require('./profiles.fixtures')
 const { makeUsersArray } = require('./users.fixtures')
 
-describe.only('Wishlists Endpoints', () => {
+describe('Wishlists Endpoints', () => {
     let db
 
     before('make knex instance', () => {
@@ -122,7 +122,6 @@ describe.only('Wishlists Endpoints', () => {
                                     .insert([maliciousWishlist])
                             })
                     })
-                    
             })
 
             it('removes XSS attack content', () => {
@@ -272,7 +271,6 @@ describe.only('Wishlists Endpoints', () => {
                                     .insert(testWishlists)
                             })
                     })
-                    
             })
 
             it('responds with 204 and updates the wishlist', () => {

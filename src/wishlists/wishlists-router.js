@@ -2,7 +2,7 @@ const express = require('express')
 const WishlistsService = require('./wishlists-service')
 const xss = require('xss')
 const path = require('path')
-const { requireAuth } = require('../middleware/basic-auth')
+const { requireAuth } = require('../middleware/basic-auth') // will need when adding authentication
 
 const wishlistsRouter = express.Router()
 const jsonParser = express.json()
@@ -37,7 +37,6 @@ wishlistsRouter
                 })
             }
         }
-        //console.log(newWishlist)
         WishlistsService.insertWishlist(
             req.app.get('db'),
             newWishlist
@@ -89,14 +88,6 @@ wishlistsRouter
         const { name, cost, checked, profile_id, id } = req.body
         const wishlistToUpdate = { name, cost, checked, profile_id, id }
 
-        // const numberOfValues = Object.values(wishlistToUpdate).filter(Boolean).length
-        // if(numberOfValues === 0){
-        //     return res.status(400).json({
-        //         error: {
-        //             message: `Request body must contain either 'name', 'cost', 'checked', or 'profile_id' `
-        //         }
-        //     })
-        // }
         if(wishlistToUpdate == null){
             return res.status(400).json({
                 error: {
@@ -114,7 +105,6 @@ wishlistsRouter
             .then((updatedWishlist) => {
                 return res.status(200).json(updatedWishlist)
             })
-            
         })
         .catch(next)
     })
