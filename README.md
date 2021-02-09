@@ -49,17 +49,27 @@ The /users endpoint houses the login information of each user who makes an accou
 example user:
 
 {
+
     id: 1,
+
     name: 'John Smith',
+
     username: 'JSmith10',
+
     email: 'JSmith@exapmle.com',
+
     password: 'Smith123',
+
     budget: 500
+
 },
 
 GET /users - gets the list of all users
+
 POST /users - adds a new user to the list of users
+
 GET /users/:userId - gets the specified user
+
 PATCH /users/:userId - updates the specified user with new data
 
 #### /api/profiles
@@ -69,15 +79,23 @@ The /profiles endpoint contains the data for all of the profiles that are create
 example profile:
 
 {
+
     id: 2,
+
     name: 'Jimmy',
+
     user_id: 1
+
 }
 
 GET /profiles - gets the list of all profiles
+
 POST /profiles - adds a new profile to the list of profiles
+
 GET /profiles/:profileId - gets the specified profile
+
 DELETE /profiles/:profileId - deletes the specified profile from the list
+
 PATCH /profiles/:profileId - updates the specified profile with new data
 
 #### /api/wishlists
@@ -87,17 +105,27 @@ The /wishlists endpoint contains the data for each item that is added under a sp
 example wishlist:
 
 {
+
     id: 3,
+
     name: 'Bicycle',
+
     cost: 200,
+
     checked: true,
+
     profile_id: 2
+
 }
 
 GET /wishlists - gets the list of all wishlists
+
 POST /wishlists - adds a new wishlist to the list of wishlists
+
 GET /wishlists/:wishlistId - gets the specified wishlist
+
 DELETE /wishlists/:wishlistId - deletes the specified wishlist from the list
+
 PATCH /wishlists/:wishlistId - updates the specified wishlist with new data
 
 
